@@ -9,7 +9,7 @@ const MAPBOX_TOKEN = 'pk.eyJ1IjoicmljaGFyZHpodWFuZyIsImEiOiJja2N5YTQxNDYwN3d5MnN
 const INITIAL_VIEW_STATE = {
     longitude: 107.5,
     latitude: 38,
-    zoom: 3.5,
+    zoom: 3.3,
     maxZoom: 16,
     pitch: 0,
     bearing: 0

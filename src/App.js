@@ -6,9 +6,9 @@ import MonthSlider from './components/MonthSlider';
 
 export default function App() {
     
-    const [month, setMonth] = useState(5);
+    const [month, setMonth] = useState(1);
 
-    const [dataFile, setDataFile] = useState('2018-06.csv');
+    const [dataFile, setDataFile] = useState('2018-01.csv');
 
     const [data, setData] = useState(null);
 
@@ -38,8 +38,7 @@ export default function App() {
      * '2016-12.csv'. 
      * Invariant: value should be a number, not a string. 
      */
-    const mapMonth = (value) => {
-        const month = value + 1;
+    const mapMonth = (month) => {
         return month < 10 ? `2016-0${month}.csv`: `2016-${month}.csv`;
     };
 
@@ -47,9 +46,9 @@ export default function App() {
         <div>
             <Heatmap data={data}/>
             <MonthSlider month={month} handleChange={handleChange} />
-            <div className="sidebar-style">
+            {/* <div className="sidebar-style">
                 <div>Month: {month} | File: {dataFile}</div>
-            </div>
+            </div> */}
         </div>
     );
 }
