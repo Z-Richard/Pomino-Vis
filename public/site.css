@@ -25,8 +25,9 @@
     width: 25%;
     top: 0;
     left: 0;
-    padding: 12px;
+    padding: 10px;
     z-index: 1 !important;
+    margin: 8px;
 }
      
 .map-overlay .map-overlay-inner {
@@ -45,4 +46,8 @@
 
 .map-overlay-title {
     font-weight: bold;
+}
+
+.map-overlay-botton {
+    margin-top: 10px;
 }

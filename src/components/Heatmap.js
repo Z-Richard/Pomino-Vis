@@ -7,8 +7,8 @@ import DeckGL from '@deck.gl/react';
 const MAPBOX_TOKEN = 'pk.eyJ1IjoicmljaGFyZHpodWFuZyIsImEiOiJja2N5YTQxNDYwN3d5MnNwamdteWl5d3k3In0.UgE-_u7VgdxQWuJh3fdh9w';
 
 const INITIAL_VIEW_STATE = {
-    longitude: 107.5,
-    latitude: 38,
+    longitude: 101,
+    latitude: 40,
     zoom: 3.3,
     maxZoom: 16,
     pitch: 0,
