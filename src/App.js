@@ -8,18 +8,29 @@ export default function App() {
     // month => dataFile => data
     const [month, setMonth] = useState(1);
 
+    // Do we really need this? This may cause an extra re-render. `UseReducer`
     const [dataFile, setDataFile] = useState('2018-01.csv');
 
     const [data, setData] = useState(null);
 
     const [animate, setAnimate] = useState(false);
 
+    const [param, setParam] = useState('VCD');
+
+    const [accessor, setAccessor] = useState(() => d => d[2]);
+
+    const accessors = {
+        'VCD': () => d => d[2],
+        'AOD': () => d => d[3],
+        'AMF': () => d => d[4]
+    };
+
     useEffect(() => {
         setDataFile(mapMonth(month));
     }, [month]);
 
     useEffect(() => {
-        fetch(`vcd/${dataFile}`)
+        fetch(`data/${dataFile}`)
             .then(response => response.text())
             .then(data => Papa.parse(data, {
                 dynamicTyping: true,
@@ -29,6 +40,7 @@ export default function App() {
             }));
     }, [dataFile]);
 
+    // TODO: Refactor this 'effect'.
     useEffect(() => {
         // Invariant: month should be a number between 1 - 12. 
         if (animate) {
@@ -45,14 +57,27 @@ export default function App() {
     }, [animate, month]);
 
     // Once the month changes, useEffect() will take over and update things.
-    const handleChange = (event) => {
+    const handleMonthChange = (event) => {
         const { value } = event.target;
         setMonth(parseInt(value));
     };
 
+    const handleParamChange = (event) => {
+        const { value } = event.target;
+        setParam(value);
+        setAccessor(accessors[value])
+    };
+
+    /* Question: should combine? 
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+        name === 'month' ? setMonth(parseInt(value)) : setParam(value);
+    }
+    */
+
     const handleClick = () => {
         setAnimate(!animate);
-    }
+    };
 
     /**
      * Map a value of [0, 19] to the corresponding month from '2016-01.csv' to
@@ -65,12 +90,14 @@ export default function App() {
 
     return (
         <div>
-            <Heatmap data={data}/>
+            <Heatmap data={data} param={param} accessor={accessor}/>
             <MonthSlider 
                 month={month} 
-                handleChange={handleChange}
+                handleMonthChange={handleMonthChange}
+                handleParamChange={handleParamChange}
                 handleClick={handleClick}
-                animate={animate} />
+                animate={animate}
+                param={param} />
             {/* <div className="sidebar-style">
                 <div>Month: {month} | File: {dataFile}</div>
             </div> */}

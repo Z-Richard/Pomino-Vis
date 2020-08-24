@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { StaticMap } from 'react-map-gl';
 import { HeatmapLayer } from '@deck.gl/aggregation-layers';
@@ -15,26 +15,42 @@ const INITIAL_VIEW_STATE = {
     bearing: 0
 };
 
-export default function Heatmap(props, {
-    radiusPixels = 25,
-    intensity = 3,
-    threshold = 0.05,
-    opacity = 0.12,
-    mapStyle = 'mapbox://styles/mapbox/dark-v10'
-}) {
+export default function Heatmap(props) {
+
+    // let layers = new HeatmapLayer(defaultLayer);
+    
+    const mapStyle = 'mapbox://styles/mapbox/dark-v10';
+        
+    // let defaultLayer = {
+    //     data: props.data,
+    //     id: 'heatmap-layer',
+    //     pickable: false,
+    //     getPosition: d => [d[0], d[1]],
+    //     getWeight: props.accessor,
+    //     radiusPixels: 25,
+    //     intensity: 3,
+    //     opacity: 0.12,
+    //     threshold: 0.05
+    // };
+
     const layers = [
         new HeatmapLayer({
             data: props.data,
             id: 'heatmap-layer',
             pickable: false,
             getPosition: d => [d[0], d[1]],
-            getWeight: d => d[2],
-            radiusPixels,
-            intensity,
-            opacity,
-            threshold
+            getWeight: props.accessor,
+            radiusPixels: 25,
+            intensity: 3,
+            opacity: 0.12,
+            threshold: 0.05,
+            updateTriggers: {
+                getWeight: [d => d[2], d => d[3], d => d[4]]
+            },
         })
     ];
+
+    console.log(layers);
 
     return (
         <DeckGL initialViewState={INITIAL_VIEW_STATE} controller={true} layers={layers}>
