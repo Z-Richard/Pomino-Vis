@@ -1,36 +1,43 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import Papa from 'papaparse';
 
 import Heatmap from './components/Heatmap';
 import MonthSlider from './components/MonthSlider';
 
 export default function App() {
-    // month => dataFile => data
     const [month, setMonth] = useState(1);
-
-    // Do we really need this? This may cause an extra re-render. `UseReducer`
-    const [dataFile, setDataFile] = useState('2018-01.csv');
 
     const [data, setData] = useState(null);
 
     const [animate, setAnimate] = useState(false);
 
-    const [param, setParam] = useState('VCD');
+    const paramReducer = (_, action) => {
+        switch (action.type) {
+            case 'VCD':
+                return initialParam;
+            case 'AOD':
+                return {
+                    param: 'AOD',
+                    accessor: d => d[3]
+                };
+            case 'AMF':
+                return {
+                    param: 'AMF',
+                    accessor: d => d[4]
+                };
+        }
+    }
 
-    const [accessor, setAccessor] = useState(() => d => d[2]);
-
-    const accessors = {
-        'VCD': () => d => d[2],
-        'AOD': () => d => d[3],
-        'AMF': () => d => d[4]
+    const initialParam = {
+        param: 'VCD',
+        accessor: d => d[2]
     };
 
-    useEffect(() => {
-        setDataFile(mapMonth(month));
-    }, [month]);
+    const [paramState, dispatch] = useReducer(paramReducer, initialParam);
 
+    // data fetching: side effect. 
     useEffect(() => {
-        fetch(`data/${dataFile}`)
+        fetch(`data/${mapMonth(month)}`)
             .then(response => response.text())
             .then(data => Papa.parse(data, {
                 dynamicTyping: true,
@@ -38,13 +45,12 @@ export default function App() {
                     setData(res.data);
                 },
             }));
-    }, [dataFile]);
+    }, [month]);
 
-    // TODO: Refactor this 'effect'.
     useEffect(() => {
         // Invariant: month should be a number between 1 - 12. 
         if (animate) {
-            const interval = setInterval(() => {
+            const timeout = setTimeout(() => {
                 const currentMonth = month + 1;
                 if (currentMonth > 12) {
                     setMonth(currentMonth - 12);
@@ -52,7 +58,7 @@ export default function App() {
                     setMonth(currentMonth);
                 }
             }, 1000);
-            return () => clearInterval(interval);
+            return () => clearTimeout(timeout);
         }
     }, [animate, month]);
 
@@ -61,19 +67,6 @@ export default function App() {
         const { value } = event.target;
         setMonth(parseInt(value));
     };
-
-    const handleParamChange = (event) => {
-        const { value } = event.target;
-        setParam(value);
-        setAccessor(accessors[value])
-    };
-
-    /* Question: should combine? 
-    const handleChange = (event) => {
-        const { name, value } = event.target;
-        name === 'month' ? setMonth(parseInt(value)) : setParam(value);
-    }
-    */
 
     const handleClick = () => {
         setAnimate(!animate);
@@ -90,14 +83,14 @@ export default function App() {
 
     return (
         <div>
-            <Heatmap data={data} param={param} accessor={accessor}/>
+            <Heatmap data={data} paramState={paramState} />
             <MonthSlider 
                 month={month} 
-                handleMonthChange={handleMonthChange}
-                handleParamChange={handleParamChange}
-                handleClick={handleClick}
                 animate={animate}
-                param={param} />
+                paramState={paramState}
+                handleMonthChange={handleMonthChange}
+                handleClick={handleClick}
+                dispatch={dispatch} />
             {/* <div className="sidebar-style">
                 <div>Month: {month} | File: {dataFile}</div>
             </div> */}

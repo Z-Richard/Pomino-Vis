@@ -29,27 +29,24 @@ export default (props) => (
                     name="param"
                     type="radio"
                     label="VCD"
-                    value="VCD"
-                    checked={props.param === 'VCD'}
-                    onChange={props.handleParamChange}
+                    checked={props.paramState.param === 'VCD'}
+                    onChange={() => props.dispatch({ type: 'VCD' })}
                     />
                 <Form.Check
                     inline
                     name="param"
                     type="radio"
                     label="AOD"
-                    value="AOD"
-                    checked={props.param === 'AOD'}
-                    onChange={props.handleParamChange}
+                    checked={props.paramState.param === 'AOD'}
+                    onChange={() => props.dispatch({ type: 'AOD' })}
                     />
                 <Form.Check
                     inline
                     name="param"
                     type="radio"
                     label="AMF"
-                    value="AMF"
-                    checked={props.param === 'AMF'}
-                    onChange={props.handleParamChange}
+                    checked={props.paramState.param === 'AMF'}
+                    onChange={() => props.dispatch({ type: 'AMF' })}
                     />
             </Form>
             <Button 
