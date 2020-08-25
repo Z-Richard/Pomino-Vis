@@ -16,7 +16,7 @@ const INITIAL_VIEW_STATE = {
     bearing: 0
 };
 
-export default function Heatmap(props) {
+export default (props) => {
     
     const mapStyle = 'mapbox://styles/mapbox/dark-v10';
 

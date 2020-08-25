@@ -91,9 +91,6 @@ export default function App() {
                 handleMonthChange={handleMonthChange}
                 handleClick={handleClick}
                 dispatch={dispatch} />
-            {/* <div className="sidebar-style">
-                <div>Month: {month} | File: {dataFile}</div>
-            </div> */}
         </div>
     );
 }
