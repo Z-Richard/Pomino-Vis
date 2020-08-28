@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.js": "/pomino-vis/static/js/main.2089db49.chunk.js",
+    "main.js.map": "/pomino-vis/static/js/main.2089db49.chunk.js.map",
+    "runtime-main.js": "/pomino-vis/static/js/runtime-main.ba75db6c.js",
+    "runtime-main.js.map": "/pomino-vis/static/js/runtime-main.ba75db6c.js.map",
+    "static/css/2.fe7459df.chunk.css": "/pomino-vis/static/css/2.fe7459df.chunk.css",
+    "static/js/2.367b9293.chunk.js": "/pomino-vis/static/js/2.367b9293.chunk.js",
+    "static/js/2.367b9293.chunk.js.map": "/pomino-vis/static/js/2.367b9293.chunk.js.map",
+    "index.html": "/pomino-vis/index.html",
+    "precache-manifest.9726c00e6a26b55bbf25ff30cc179a9b.js": "/pomino-vis/precache-manifest.9726c00e6a26b55bbf25ff30cc179a9b.js",
+    "service-worker.js": "/pomino-vis/service-worker.js",
+    "static/css/2.fe7459df.chunk.css.map": "/pomino-vis/static/css/2.fe7459df.chunk.css.map",
+    "static/js/2.367b9293.chunk.js.LICENSE.txt": "/pomino-vis/static/js/2.367b9293.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.ba75db6c.js",
+    "static/css/2.fe7459df.chunk.css",
+    "static/js/2.367b9293.chunk.js",
+    "static/js/main.2089db49.chunk.js"
+  ]
+}
